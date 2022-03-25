@@ -1,6 +1,6 @@
 import random
 import numpy as np
-from BattleShip.player import Player
+from player import Player
 class bot(Player):
     def __init__(self, fieldSize, pieces):
         self.fieldSize = fieldSize
