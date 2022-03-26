@@ -79,17 +79,21 @@ table {
     height: 400px;
     margin-left: auto;
     margin-right: auto;
+    background: #1a1a1a;
+    filter: drop-shadow(0px 0px 5px #222222);
+    border: solid 1px #2c2c2c;
 }
 td {
-    border: solid 1px #66fcf1;
+    border: solid 1px #2c2c2c;
     color: white;
-    box-shadow: inset 0 0 10px #6cbab5;
     cursor: pointer;
     transition: all .5s;
-    filter: drop-shadow(0px 0px 5px #6cbab5);
+    filter: drop-shadow(0px 0px 5px #222222);
 }
 td:hover {
+    border: solid 1px #66fcf1;
     background: #6cbab5;
+    filter: drop-shadow(0px 0px 5px #6cbab5);
 }
 .title{
     text-align: left !important;

@@ -14,7 +14,7 @@
         <div class="left">
             <div>
                 <div class="title"><span>Player 1</span></div>
-                <table id="player-1">
+                <table id="player-1" cellspacing="0">
                     <tbody>
                         <tr>
                             <td></td>
@@ -145,7 +145,7 @@
                 <div class="title">
                     <span>Player 2</span>
                 </div>
-                <table id="player-2">
+                <table id="player-2" cellspacing="0">
                     <tbody>
                         <tr>
                             <td></td>
@@ -272,6 +272,32 @@
             </div>
         </div>
     </div>
+    <script>
+        let player1 = document.querySelector("#player-1");
+        let player2 = document.querySelector("#player-2");
+        //maps table x and y coordinates
+        const mapTable = (table) => {
+            row = table.children[0].children;
+            for (let index = 0; index < row.length; index++) {
+                row[index].id = index+1;
+                for (let jay = 0; jay <  row[index].children.length; jay++) {
+                    row[index].children[jay].class = jay+1;
+                }
+            }
+        }
+        window.onload = () => {
+            mapTable(player1)
+            mapTable(player2)
+        }
+        player1.addEventListener("click",(event)=> {
+            let coords = [parseInt(event.target.parentNode.id), event.target.class]
+            alert(`X: ${coords[0]}, Y: ${coords[1]}, on player 1 board`)
+        });
+        player2.addEventListener("click",(event)=> {
+            let coords = [parseInt(event.target.parentNode.id), event.target.class]
+            alert(`X: ${coords[0]}, Y: ${coords[1]}, on player 2 board`)
+        });
+    </script>
 </body>
 
 </html>
