@@ -1,52 +1,108 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+@font-face {
+  font-family: "cartograph";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./fonts/cartograph-mono-cf.otf") format("opentype");
+}
 body {
-    background: #0b0c10 url('../assets/bg.png') repeat-x;
-    font-family: 'Ubuntu Mono', sans-serif;
-    color: white;
-    margin: 0;
-    padding: 0;
+  background: #0b0c10 url("../assets/bg.png") repeat-x;
+  font-family: "cartograph", sans-serif;
+  color: white;
+  margin: 0;
+  padding: 0;
 }
 .logo {
-    text-transform: uppercase;
-    font-size: 72px;
-    margin: 0;
-    padding: 0;
-    filter: drop-shadow(0px 0px 5px #6cbab5);
+  text-transform: uppercase;
+  font-size: 72px;
+  margin: 0;
+  padding: 0;
+  filter: drop-shadow(0px 0px 5px #6cbab5);
 }
 button {
-    font-family: 'Ubuntu Mono';
-    padding: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background: #0b0c10;
+  font-family: "cartograph";
+  padding: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #0b0c10;
+  border: solid 1px #66fcf1;
+  color: white;
+  box-shadow: inset 0 0 10px #6cbab5;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.5s;
+  filter: drop-shadow(0px 0px 5px #6cbab5);
+}
+button:hover {
+  background: #66fcf1;
+  color: black;
+}
+hr {
+  box-shadow: 0 0 10px #6cbab5;
+}
+.main {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+.main div {
+  padding: 50px;
+  border: solid 1px #66fcf1;
+  box-shadow: inset 0 0 5px #6cbab5;
+  background: #0b0c10;
+  filter: drop-shadow(0px 0px 5px #6cbab5);
+}
+.parent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  height: 100vh;
+}
+.left {
+  grid-area: 1 / 1 / 2 / 2;
+  display: flex;
+}
+.right {
+  grid-area: 1 / 2 / 2 / 3;
+  display: flex;
+}
+.left div, .right div {  
+    width: 100%;
+}
+table {
+    width: 400px;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+td {
     border: solid 1px #66fcf1;
     color: white;
     box-shadow: inset 0 0 10px #6cbab5;
-    font-weight: bold;
-    text-transform: uppercase;
     cursor: pointer;
     transition: all .5s;
     filter: drop-shadow(0px 0px 5px #6cbab5);
 }
-button:hover {
-    background: #66fcf1;
-    color: black;
+td:hover {
+    background: #6cbab5;
 }
-hr {
-    box-shadow:  0 0 10px #6cbab5;
-}
-.main {
-    text-align:center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-}
-.main div {
-    padding: 50px;
-    border: solid 1px #66fcf1;
-    box-shadow: inset  0 0 5px #6cbab5;
-    background: #0b0c10;
+.title{
+    text-align: left !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: large;
+    border-bottom: solid 1px  #66fcf1;
     filter: drop-shadow(0px 0px 5px #6cbab5);
+    margin-bottom: 50px;
+}
+.title span {
+    padding: 10px;
+    background: #67fbf1;
+    color: black;
+    box-shadow: inset 0 0 10px #6cbab5;
 }
