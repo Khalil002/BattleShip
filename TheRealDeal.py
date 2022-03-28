@@ -96,31 +96,36 @@ class Player:
         # 1 --> Miss
         # 2 --> Hit
         result = 0
-        if(enemy.board[x][y] >= 2):
+        if(enemy.board[x][y] > 1):
             result = 0
         elif(enemy.board[x][y] == 0):
-            enemy.board[x][y] == 2
+            enemy.board[x][y] = 2
             result = 1
         else:
-            enemy.board[x][y] == 3
+            enemy.board[x][y] = 3
             result = 2
             
-        enemy.updateShips()
         return result
         
     def isShipSinked(self, ship):
+        
+
         sinked = True
         if(ship.rotated == False):
             for i in range(ship.size):
+                
                 if(self.board[ship.x+i][ship.y] == 1):
                     sinked = False
                     break
         else:
             for i in range(ship.size):
+                
                 if(self.board[ship.x][ship.y+i] == 1):
                     sinked = False
                     break
+        
         return sinked
+
     
     def sunkenShips(self):
         count = 0
@@ -128,16 +133,18 @@ class Player:
             s = self.ships[i]
             if(s.isSinked == True):
                 count = count + 1
+        
         return count
                          
     def updateShips(self):
         for i in range(len(self.ships)):
             s = self.ships[i]
-            self.isShipSinked(s)
+            s.isSinked = self.isShipSinked(s)
     
     def isDefeated(self):
         ships = len(self.ships)
         sinkedShips = self.sunkenShips()
+        
         
         if(ships == sinkedShips):
             return True
@@ -152,11 +159,7 @@ class Bot(Player):
         self.hitX = []
         self.hitY = []
     
-    def attack(self, enemy):
-        if(self.targeting):
-            return self.targetedAttack(enemy)
-        else:
-            return self.randomAttack(enemy)
+    
     
     def randomAttack(self, enemy):
         while(True):
@@ -164,16 +167,17 @@ class Bot(Player):
             y = random.randint(0, self.boardSize-1)
             if(enemy.board[x][y]<2):
                 break
-            result = super().attack(x, y, enemy)
-            if(result == 2):
-                self.targeting = True
-                for i in range(len(enemy.ships)):
-                    if(enemy.ships[i].contains(x, y)):
-                        self.targetedShip = enemy.ships[i]
-                        self.hitX.append(x)
-                        self.hitY.append(y)
-                        break
-            return result
+        result = super().attack(x, y, enemy)
+            
+        if(result == 2):
+            self.targeting = True
+            for i in range(len(enemy.ships)):
+                if(enemy.ships[i].contains(x, y)):
+                    self.targetedShip = enemy.ships[i]
+                    self.hitX.append(x)
+                    self.hitY.append(y)
+                    break
+        return result
         
     def targetedAttack(self, enemy):
         result = 0
@@ -239,10 +243,15 @@ class Bot(Player):
             self.hitX.append(x)
             self.hitY.append(y)
         return result
+
+    def attack(self, enemy):
+        if(self.targeting == True):
+            return self.targetedAttack(enemy)
+        else:
+            return self.randomAttack(enemy)
         
-
-
-#EXAMPLE IN CONSOLE
+    
+    
 p = Player(10)
 
 b = Bot(10)
@@ -251,16 +260,21 @@ s1 = Ship("Submarino", 1)
 s2 = Ship("Destructor", 2)
 s3 = Ship("crucero", 3)
 s4 = Ship("porta aviones", 4)
+s5 = Ship("Submarino", 1)
+s6 = Ship("Destructor", 2)
+s7 = Ship("crucero", 3)
+s8 = Ship("porta aviones", 4)
 
-p.addShip(s1)
+#p.addShip(s1)
 p.addShip(s2)
-p.addShip(s3)
-p.addShip(s4)
+#p.addShip(s3)
+#p.addShip(s4)
 
-b.addShip(s1)
-b.addShip(s2)
-b.addShip(s3)
-b.addShip(s4)
+
+#b.addShip(s5)
+b.addShip(s6)
+#b.addShip(s7)
+#b.addShip(s8)
 
 playerTurn = True
 while(True):
@@ -317,27 +331,20 @@ while(True):
                 b.targetedShip = None
                 b.hitX = []
                 b.hitY = []
-
+        result = 0
         result = b.attack(p)
-        if(result == 1):
+        
+        if(result == 0):
+            print("That spot has already been attacked")
+            playerTurn = True
+        elif(result == 1):
             print("The bot missed")
             playerTurn = True
         else:
             print("The bot hit!!!")
             playerTurn  = False
-        
+            if(result == None):
+              break
+
     p.updateShips()
     b.updateShips()
-
-
-
-                        
-                    
-        
-
-
-
-
-            
-            
-        
