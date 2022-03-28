@@ -1,6 +1,7 @@
 import random
 import numpy as np
 from player import Player
+
 class Bot(Player):
     def __init__(self, boardSize):
         super().__init__(boardSize)
@@ -8,11 +9,7 @@ class Bot(Player):
         self.hitX = []
         self.hitY = []
     
-    def attack(self, enemy):
-        if(self.targeting):
-            return self.targetedAttack(enemy)
-        else:
-            return self.randomAttack(enemy)
+    
     
     def randomAttack(self, enemy):
         while(True):
@@ -20,16 +17,17 @@ class Bot(Player):
             y = random.randint(0, self.boardSize-1)
             if(enemy.board[x][y]<2):
                 break
-            result = super().attack(x, y, enemy)
-            if(result == 2):
-                self.targeting = True
-                for i in range(len(enemy.ships)):
-                    if(enemy.ships[i].contains(x, y)):
-                        self.targetedShip = enemy.ships[i]
-                        self.hitX.append(x)
-                        self.hitY.append(y)
-                        break
-            return result
+        result = super().attack(x, y, enemy)
+            
+        if(result == 2):
+            self.targeting = True
+            for i in range(len(enemy.ships)):
+                if(enemy.ships[i].contains(x, y)):
+                    self.targetedShip = enemy.ships[i]
+                    self.hitX.append(x)
+                    self.hitY.append(y)
+                    break
+        return result
         
     def targetedAttack(self, enemy):
         result = 0
@@ -95,4 +93,10 @@ class Bot(Player):
             self.hitX.append(x)
             self.hitY.append(y)
         return result
+
+    def attack(self, enemy):
+        if(self.targeting == True):
+            return self.targetedAttack(enemy)
+        else:
+            return self.randomAttack(enemy)
   

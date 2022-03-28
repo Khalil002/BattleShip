@@ -1,4 +1,4 @@
-import numpy 
+import numpy
 import random
 
 class Player:
@@ -65,31 +65,36 @@ class Player:
         # 1 --> Miss
         # 2 --> Hit
         result = 0
-        if(enemy.board[x][y] >= 2):
+        if(enemy.board[x][y] > 1):
             result = 0
         elif(enemy.board[x][y] == 0):
-            enemy.board[x][y] == 2
+            enemy.board[x][y] = 2
             result = 1
         else:
-            enemy.board[x][y] == 3
+            enemy.board[x][y] = 3
             result = 2
             
-        enemy.updateShips()
         return result
         
     def isShipSinked(self, ship):
+        
+
         sinked = True
         if(ship.rotated == False):
             for i in range(ship.size):
+                
                 if(self.board[ship.x+i][ship.y] == 1):
                     sinked = False
                     break
         else:
             for i in range(ship.size):
+                
                 if(self.board[ship.x][ship.y+i] == 1):
                     sinked = False
                     break
+        
         return sinked
+
     
     def sunkenShips(self):
         count = 0
@@ -97,16 +102,18 @@ class Player:
             s = self.ships[i]
             if(s.isSinked == True):
                 count = count + 1
+        
         return count
                          
     def updateShips(self):
         for i in range(len(self.ships)):
             s = self.ships[i]
-            self.isShipSinked(s)
+            s.isSinked = self.isShipSinked(s)
     
     def isDefeated(self):
         ships = len(self.ships)
         sinkedShips = self.sunkenShips()
+        
         
         if(ships == sinkedShips):
             return True
