@@ -60,7 +60,7 @@ class Player:
                     possible2 = True
                     for k in range(sSize):
                         if(j+k > bSize-1 or self.board[i][j+k]==1):
-                            possible = False
+                            possible2 = False
                             break
                     if(possible2 == True):
                         xPos.append(i)
