@@ -272,31 +272,57 @@
             </div>
         </div>
     </div>
+    <script src="eel.js"></script>
     <script>
         let player1 = document.querySelector("#player-1");
         let player2 = document.querySelector("#player-2");
+        let p1coords = [];
         //maps table x and y coordinates
-        const mapTable = (table) => {
+        const addTableIdentifiers = (table) => {
             row = table.children[0].children;
             for (let index = 0; index < row.length; index++) {
-                row[index].id = index+1;
-                for (let jay = 0; jay <  row[index].children.length; jay++) {
-                    row[index].children[jay].class = jay+1;
+                row[index].setAttribute('x', index + 1)
+                for (let jay = 0; jay < row[index].children.length; jay++) {
+                    row[index].children[jay].setAttribute('y', jay + 1);
                 }
             }
         }
+        
         window.onload = () => {
-            mapTable(player1)
-            mapTable(player2)
+            addTableIdentifiers(player1)
+            addTableIdentifiers(player2)
+            eel.kGame();
         }
-        player1.addEventListener("click",(event)=> {
-            let coords = [parseInt(event.target.parentNode.id), event.target.class]
+        player1.addEventListener("click", (event) => {
+            let coords = [parseInt(event.target.parentNode.getAttribute('x')), event.target.getAttribute('y')]
             alert(`X: ${coords[0]}, Y: ${coords[1]}, on player 1 board`)
         });
-        player2.addEventListener("click",(event)=> {
-            let coords = [parseInt(event.target.parentNode.id), event.target.class]
+        player2.addEventListener("click", (event) => {
+            let coords = [parseInt(event.target.parentNode.getAttribute('x')), event.target.getAttribute('y')]
             alert(`X: ${coords[0]}, Y: ${coords[1]}, on player 2 board`)
         });
+        eel.expose(mapBoard)
+        function mapBoard(board, playerNum) {
+            board = JSON.parse(board);
+            let selectedTable;
+            if (parseInt(playerNum) == 0) {
+                selectedTable = player1.children[0].children;
+            } else {
+                selectedTable = player2.children[0].children;
+            }
+            for (let index = 0; index < board.length; index++) {
+                tableRow = selectedTable[index].cells;
+                console.log(tableRow)
+                for (let jay = 0; jay < tableRow.length; jay++) {
+                    const element = tableRow[jay];
+                    if(board[index][jay] == 0) {
+                        element.className = "";
+                    } else {
+                        element.className = "active-cell";
+                    }
+                }
+            }
+        }
     </script>
 </body>
 
