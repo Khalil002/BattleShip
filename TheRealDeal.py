@@ -326,7 +326,7 @@ while(True):
             
     if(playerTurn == False):
         if(b.targeting == True):
-            if(b.targetedShip.isSunken == True):
+            if(b.targetedShip.isSinked == True):
                 b.targeting = False
                 b.targetedShip = None
                 b.hitX = []
