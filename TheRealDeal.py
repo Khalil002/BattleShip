@@ -8,7 +8,6 @@ from ship import Ship
 
 import eel
 p = Player(10)
-
 b = Bot(10)
 
 s1 = Ship("Submarino", 1)
@@ -32,6 +31,7 @@ playerTurn = True
 
 @eel.expose
 def getBoard():
+    print("hello")
     eel.mapBoard(json.dumps(p.board, cls=NumpyArrayEncoder), 0)
     eel.mapBoard(json.dumps(b.board, cls=NumpyArrayEncoder), 1)
 
@@ -39,23 +39,9 @@ def getBoard():
 @eel.expose
 def attack(xCoord, yCoord):
     global playerTurn
-    print("Player board")
-    s = ""
-    for i in range(p.boardSize):
-        for j in range(p.boardSize):
-            s = s + str(p.board[i][j]) + " "
-        s = s + "\n"
-    print(s)
-    print("")
+    
 
-    print("Bot board")
-    s = ""
-    for i in range(b.boardSize):
-        for j in range(b.boardSize):
-            s = s + str(b.board[i][j]) + " "
-        s = s + "\n"
-    print(s)
-    print("")
+    
     if playerTurn == True and (p.isDefeated() == False or b.isDefeated() == False):
         result = 0
         x = int(xCoord)

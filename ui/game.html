@@ -294,11 +294,11 @@
             eel.getBoard();
         }
         player1.addEventListener("click", (event) => {
-            let coords = [parseInt(event.target.parentNode.getAttribute('x')), event.target.getAttribute('y')]
-            eel.attack(coords[0], coords[1]);
+            
         });
         player2.addEventListener("click", (event) => {
-
+            let coords = [parseInt(event.target.parentNode.getAttribute('x')), event.target.getAttribute('y')]
+            eel.attack(coords[0], coords[1]);
         });
         eel.expose(mapBoard)
         function mapBoard(board, playerNum) {
@@ -316,8 +316,12 @@
                     const element = tableRow[jay];
                     if(board[index][jay] == 0) {
                         element.className = "";
-                    } else {
-                        element.className = "active-cell";
+                    } else if(board[index][jay] == 1){
+                        element.className = "ship-cell";
+                    } else if(board[index][jay] == 2){
+                        element.className = "miss-cell";
+                    }else{
+                        element.className = "hit-cell";
                     }
                 }
             }
@@ -325,6 +329,7 @@
         eel.expose(gameAlert)
         function gameAlert(message){
             alert(message);
+            
         }
     </script>
 </body>
