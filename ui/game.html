@@ -291,15 +291,14 @@
         window.onload = () => {
             addTableIdentifiers(player1)
             addTableIdentifiers(player2)
-            eel.kGame();
+            eel.getBoard();
         }
         player1.addEventListener("click", (event) => {
             let coords = [parseInt(event.target.parentNode.getAttribute('x')), event.target.getAttribute('y')]
-            alert(`X: ${coords[0]}, Y: ${coords[1]}, on player 1 board`)
+            eel.attack(coords[0], coords[1]);
         });
         player2.addEventListener("click", (event) => {
-            let coords = [parseInt(event.target.parentNode.getAttribute('x')), event.target.getAttribute('y')]
-            alert(`X: ${coords[0]}, Y: ${coords[1]}, on player 2 board`)
+
         });
         eel.expose(mapBoard)
         function mapBoard(board, playerNum) {
@@ -322,6 +321,10 @@
                     }
                 }
             }
+        }
+        eel.expose(gameAlert)
+        function gameAlert(message){
+            alert(message);
         }
     </script>
 </body>
