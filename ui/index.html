@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Battlesh1p</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="siiimpleToast/style.css">
+    <script src="siiimpleToast/siiimple-toast.min.js"></script>
 </head>
+
 <body>
     <div class="main">
         <div>
             <h1 class="logo">Battlesh1p</h1>
             <p>Choose game type</p>
             <hr>
-            <a href="game.html"><button onclick="myfunc()">Player vs Computer</button></a>
-            <script src="eel.js"></script>
-            <script>    
-                function myfunc(){
-                    eel.pvb();
-                }
-            </script> 
-            
-            <button>Player vs Player</button>
+            <button id="pvc">Player vs Computer</button>
+            <button id="pvp">Player vs Player</button>
         </div>
     </div>
-    
-    
-
-    </script>
+    <!---Modal-->
+    <div class="modal-hidden">
+        <div class="modal-content">
+            <div class="parent-ship-selector">
+                <div class="div1-s"> 
+                    <span>Submarines</span>
+                    <input type="text" id="ship1">
+                </div>
+                <div class="div2-s"> 
+                    <span>Destroyers</span>
+                    <input type="text" id="ship2">
+                </div>
+                <div class="div3-s">
+                    <span>Cruisers</span>
+                    <input type="text" id="ship3">
+                </div>
+                <div class="div4-s">
+                    <span>Carriers</span>
+                    <input type="text" id="ship4">
+                </div>
+            </div>
+            <button id="startGame" class="active-btn">Start Game</button>
+            <button id="closeModal">Close Modal</button>
+        </div>
+    </div>
+    <script src="eel.js"></script>
+    <script src="js/mainScreen.js"></script>
 </body>
+
 </html>

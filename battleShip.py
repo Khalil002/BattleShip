@@ -64,12 +64,9 @@ def attack(xCoord, yCoord):
         b.updateShips()
         getBoard()
         if (b.isDefeated() == True):
-            eel.gameAlert("The Player Wins.")
-    else:
-        
+            eel.showWinner("The Player Wins.")
+    else: 
         eel.gameAlert("Game already Ended.")
-    
-        
 
 @eel.expose
 def botAttack():
@@ -93,40 +90,8 @@ def botAttack():
         p.updateShips()
         getBoard()
     if (p.isDefeated() == True):
-        eel.gameAlert("The Bot Wins.")
-
-@eel.expose
-def createboard(a, b, c, d):
-    n = a*1 + b*2 + c*3 + d*4
+        eel.showWinner("The Bot Wins.")
     
-    size = 10*10
-    if(n > size*0.75):
-        size = n + n*0.5
-    
-    size = math.isqrt(size)
-    p = Player(size)
-    b = Bot(size)
-
-    for i in range(a):
-        p.addShip(Ship("Submarino"+i, 1))
-        b.addShip(Ship("Submarinob"+i, 1))
-    for i in range(b):
-        p.addShip(Ship("Destructor"+i, 2))
-        b.addShip(Ship("Destructorb"+i, 2))
-    for i in range(c):
-        p.addShip(Ship("crucero"+i, 3))
-        b.addShip(Ship("crucerob"+i, 3))
-    for i in range(d):
-        p.addShip(Ship("porta aviones"+i, 4))
-        b.addShip(Ship("porta avionesb"+i, 4))
-
-
-
-    
-    
-
-
-
 p = Player(10)
 b = Bot(10)
 playerTurn = True

@@ -37,6 +37,10 @@ button:hover {
   background: #66fcf1;
   color: black;
 }
+.active-btn {
+  background: #66fcf1;
+  color: black;
+}
 hr {
   box-shadow: 0 0 10px #6cbab5;
 }
@@ -71,44 +75,45 @@ hr {
   grid-area: 1 / 2 / 2 / 3;
   display: flex;
 }
-.left div, .right div {  
-    width: 100%;
+.left div,
+.right div {
+  width: 100%;
 }
 table {
-    width: 400px;
-    height: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    background: #1a1a1a;
-    filter: drop-shadow(0px 0px 5px #222222);
-    border: solid 1px #2c2c2c;
+  width: 400px;
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #1a1a1a;
+  filter: drop-shadow(0px 0px 5px #222222);
+  border: solid 1px #2c2c2c;
 }
 td {
-    border: solid 1px #2c2c2c;
-    color: white;
-    cursor: pointer;
-    transition: all .5s;
-    filter: drop-shadow(0px 0px 5px #222222);
+  border: solid 1px #2c2c2c;
+  color: white;
+  cursor: pointer;
+  transition: all 0.5s;
+  filter: drop-shadow(0px 0px 5px #222222);
 }
 td:hover {
-    border: solid 1px #66fcf1;
-    background: #6cbab5;
-    filter: drop-shadow(0px 0px 5px #6cbab5);
+  border: solid 1px #66fcf1;
+  background: #6cbab5;
+  filter: drop-shadow(0px 0px 5px #6cbab5);
 }
-.title{
-    text-align: left !important;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: large;
-    border-bottom: solid 1px  #66fcf1;
-    filter: drop-shadow(0px 0px 5px #6cbab5);
-    margin-bottom: 50px;
+.title {
+  text-align: left !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: large;
+  border-bottom: solid 1px #66fcf1;
+  filter: drop-shadow(0px 0px 5px #6cbab5);
+  margin-bottom: 50px;
 }
 .title span {
-    padding: 10px;
-    background: #67fbf1;
-    color: black;
-    box-shadow: inset 0 0 10px #6cbab5;
+  padding: 10px;
+  background: #67fbf1;
+  color: black;
+  box-shadow: inset 0 0 10px #6cbab5;
 }
 .ship-cell {
   border: solid 1px #66fcf1;
@@ -133,6 +138,67 @@ td:hover {
   filter: drop-shadow(0px 0px 5px #6cbab5);
   padding: 15px;
   transform: all;
-  transition: all .5s;
+  transition: all 0.5s;
   border: solid 1px #66fcf1;
+}
+.modal {
+  top: 0;
+  position: absolute;
+  z-index: 100000;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  transition: all 0.5s ease;
+  opacity: 1;
+}
+.modal-content {
+  width: 600px;
+  height: 400px;
+  padding: 50px;
+  background: #0b0c10 url("../assets/bg.png") repeat-x;
+  filter: drop-shadow(0px 0px 5px #6cbab5);
+  border: solid 1px #66fcf1;
+  margin: auto;
+}
+.modal-hidden {
+  display: none;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.parent-ship-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  height: inherit;
+}
+.parent-ship-selector div {
+  text-align: center;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+input {
+  font-family: "cartograph";
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #0b0c10;
+  border: solid 1px #66fcf1;
+  color: white;
+  filter: drop-shadow(0px 0px 5px #6cbab5);
+}
+.div1-s {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.div2-s {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.div3-s {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.div4-s {
+  grid-area: 2 / 1 / 3 / 2;
 }
