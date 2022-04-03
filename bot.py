@@ -53,7 +53,7 @@ class Bot(Player):
                 #Bot finds out the ship is in rotation 0
                 found = False
                 y = self.hitY[0]
-                for i in range(self.hitX):
+                for i in range(len(self.hitX)):
                     x = self.hitX[i]-1
                     if(x >= 0 and enemy.board[x][y] < 2):
                         found = True
@@ -62,7 +62,7 @@ class Bot(Player):
                     result = super().attack(x, y, enemy)
                 else:
                     found2 = False
-                    for i in range(self.hitX):
+                    for i in range(len(self.hitX)):
                         x = self.hitX[i]+1
                         if(x < self.boardSize and enemy.board[x][y] < 2):
                             break
@@ -73,7 +73,7 @@ class Bot(Player):
                 #Bot finds out the ship is in rotation 1
                 found = False
                 x = self.hitX[0]
-                for i in range(self.hitY):
+                for i in range(len(self.hitY)):
                     y = self.hitY[i]-1
                     if(y >= 0 and enemy.board[x][y] < 2):
                         found = True
@@ -82,7 +82,7 @@ class Bot(Player):
                     result = super().attack(x, y, enemy)
                 else:
                     found2 = False
-                    for i in range(self.hitY):
+                    for i in range(len(self.hitY)):
                         y = self.hitY[i]+1
                         if(y < self.boardSize and enemy.board[x][y] < 2):
                             break

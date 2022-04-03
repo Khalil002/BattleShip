@@ -43,7 +43,7 @@ def getBoard():
 @eel.expose
 def attack(xCoord, yCoord):
     global playerTurn
-    if playerTurn == True and (p.isDefeated() == False and b.isDefeated() == False):
+    if playerTurn == True and b.isDefeated()==False:
         result = 0
         x = int(xCoord)-1
         y = int(yCoord)-1
@@ -62,33 +62,38 @@ def attack(xCoord, yCoord):
             eel.gameAlert("Not your turn")
         b.updateShips()
         getBoard()
-    elif (p.isDefeated() == True or b.isDefeated() == True):
-        eel.gameAlert("Game Ended.")
+        if (b.isDefeated() == True):
+            eel.gameAlert("The Player Wins.")
+    else:
+        
+        eel.gameAlert("Game already Ended.")
+    
         
 
 @eel.expose
 def botAttack():
     global playerTurn
-    if(b.targeting == True):
+    if playerTurn == False and p.isDefeated()==False:
+        if(b.targeting == True):
             if(b.targetedShip.isSinked == True):
                 b.targeting = False
                 b.targetedShip = None
                 b.hitX = []
                 b.hitY = []
-    result = 0
-    result = b.attack(p)
-    if(result == 0):
-        eel.gameAlert("That spot has already been attacked")
-        playerTurn = True
-    elif(result == 1):
-         eel.gameAlert("The bot missed")
-         playerTurn = True
-    else:
-        eel.gameAlert("The bot hit!!!")
-        playerTurn = False
-        botAttack()
-    p.updateShips()
-    getBoard()
+        result = 0
+        result = b.attack(p)
+        if(result == 1):
+            eel.gameAlert("The bot missed")
+            playerTurn = True
+        else:
+            eel.gameAlert("The bot hit!!!")
+            playerTurn = False
+            botAttack()
+        p.updateShips()
+        getBoard()
+    if (p.isDefeated() == True):
+        eel.gameAlert("The Bot Wins.")
+    
 
 p = Player(10)
 b = Bot(10)
