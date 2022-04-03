@@ -1,6 +1,8 @@
 let player1 = document.querySelector("#player-1");
 let player2 = document.querySelector("#player-2");
 let p1coords = [];
+let params = new URLSearchParams(window.location.search);
+const gameType = params.get("gameType");
 //maps table x and y coordinates
 const addTableIdentifiers = (table) => {
     row = table.children[0].children;
@@ -15,10 +17,14 @@ const addTableIdentifiers = (table) => {
 window.onload = () => {
     addTableIdentifiers(player1)
     addTableIdentifiers(player2)
+    if(gameType == 0) {
+        document.querySelectorAll(".title span")[1].innerText = "Computer";
+        eel.pvb();
+    }
     eel.getBoard();
 }
 player1.addEventListener("click", (event) => {
-    showWinner("a")
+    
 });
 player2.addEventListener("click", (event) => {
     let coords = [parseInt(event.target.parentNode.getAttribute('x')), event.target.getAttribute('y')]
@@ -35,7 +41,7 @@ function mapBoard(board, playerNum) {
     }
     for (let index = 0; index < board.length; index++) {
         tableRow = selectedTable[index].cells;
-        console.log(tableRow)
+        console.log(board)
         for (let jay = 0; jay < tableRow.length; jay++) {
             const element = tableRow[jay];
             if (board[index][jay] == 0) {

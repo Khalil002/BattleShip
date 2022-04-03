@@ -7,23 +7,25 @@ from player import Player
 from ship import Ship
 import eel
 import math
-
-
-
-
+ships = []
+@eel.expose
+def setShipValues(values):
+    global ships
+    ships = values
+    print(ships)
 
 @eel.expose
 def pvb():
     print("hello")
-    
-    s1 = Ship("Submarino", 1)
-    s2 = Ship("Destructor", 2)
-    s3 = Ship("crucero", 3)
-    s4 = Ship("porta aviones", 4)
-    s5 = Ship("Submarino", 1)
-    s6 = Ship("Destructor", 2)
-    s7 = Ship("crucero", 3)
-    s8 = Ship("porta aviones", 4)
+    global ships
+    s1 = Ship("Submarino", int(ships[0]))
+    s2 = Ship("Destructor", int(ships[1]))
+    s3 = Ship("crucero", int(ships[2]))
+    s4 = Ship("porta aviones", int(ships[3]))
+    s5 = Ship("Submarino", int(ships[0]))
+    s6 = Ship("Destructor", int(ships[1]))
+    s7 = Ship("crucero", int(ships[2]))
+    s8 = Ship("porta aviones", int(ships[3]))
     p.addShip(s1)
     p.addShip(s2)
     p.addShip(s3)

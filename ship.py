@@ -11,6 +11,9 @@ class Ship:
         self.x = x
         self.y = y
         self.rotated = rotated
+
+    def setSize(self, size):
+        self.size = size
         
     def contains(self, x, y):
         contains = False

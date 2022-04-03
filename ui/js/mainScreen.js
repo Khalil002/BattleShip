@@ -4,6 +4,12 @@ let closeBtn = document.querySelector("#closeModal");
 let startGameBtn = document.querySelector("#startGame");
 let gameType = null;
 // 0 = player vs computer, 1 = player vs player
+const clearInputs = () => {
+    let inputs = document.querySelectorAll("input");
+    inputs.forEach(input => {
+        input.value = null;
+    });
+}
 const showModal = () => {
     let modal = document.querySelector(".modal-hidden");
     modal.className = "modal";
@@ -13,10 +19,12 @@ const closeModal = () => {
     modal.className = "modal-hidden";
 }
 pvc.addEventListener("click", () => {
+    clearInputs()
     showModal();
     gameType = 0;
 });
 pvp.addEventListener("click", () => {
+    clearInputs();
     showModal();
     gameType = 1;
 })
@@ -26,7 +34,8 @@ startGameBtn.addEventListener("click", () => {
     let invalidValue = false;
     for (let index = 0; index < values.length; index++) {
         const element = values[index];
-        if(isNaN(parseInt(element))){
+        console.log(element);
+        if(isNaN(element) || element <= 0){
             invalidValue = true;
             break
         }
@@ -34,7 +43,8 @@ startGameBtn.addEventListener("click", () => {
     if(invalidValue) {
         message("Please check your values")
     } else {
-        message("valid values");
+        eel.setShipValues(values);
+        window.location.href = `game.html?gameType=${gameType}`;
     }
 })
 const message = (message) => {
