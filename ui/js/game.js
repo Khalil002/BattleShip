@@ -17,18 +17,26 @@ const addTableIdentifiers = (table) => {
 window.onload = () => {
     addTableIdentifiers(player1)
     addTableIdentifiers(player2)
+    console.log(gameType);
     if(gameType == 0) {
         document.querySelectorAll(".title span")[1].innerText = "Computer";
         eel.pvb();
     }
+    if(gameType == 1){
+        document.querySelectorAll(".title span")[1].innerText = "Player 2";
+        eel.pvp();
+    }
     eel.getBoard();
 }
 player1.addEventListener("click", (event) => {
-    
+    if(gameType == 1){
+        let coords = [parseInt(event.target.parentNode.getAttribute('x')), event.target.getAttribute('y')]
+        eel.attack(coords[0], coords[1], 1);
+    }
 });
 player2.addEventListener("click", (event) => {
     let coords = [parseInt(event.target.parentNode.getAttribute('x')), event.target.getAttribute('y')]
-    eel.attack(coords[0], coords[1]);
+    eel.attack(coords[0], coords[1], 0);
 });
 eel.expose(mapBoard)
 function mapBoard(board, playerNum) {

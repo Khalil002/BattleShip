@@ -7,96 +7,136 @@ from player import Player
 from ship import Ship
 import eel
 import math
-ships = []
-@eel.expose
-def setShipValues(values):
-    global ships
-    ships = values
-    print(ships)
+
+game = 0
 
 @eel.expose
 def pvb():
-    print("hello")
-    global ships
-    s1 = Ship("Submarino", int(ships[0]))
-    s2 = Ship("Destructor", int(ships[1]))
-    s3 = Ship("crucero", int(ships[2]))
-    s4 = Ship("porta aviones", int(ships[3]))
-    s5 = Ship("Submarino", int(ships[0]))
-    s6 = Ship("Destructor", int(ships[1]))
-    s7 = Ship("crucero", int(ships[2]))
-    s8 = Ship("porta aviones", int(ships[3]))
-    p.addShip(s1)
-    p.addShip(s2)
-    p.addShip(s3)
-    p.addShip(s4)
+    global game
+    game = 0
 
-    b.addShip(s5)
-    b.addShip(s6)
-    b.addShip(s7)
-    b.addShip(s8)
+@eel.expose
+def pvp():
+    global game
+    game = 1
+    print("pvp")
 
     
 
 @eel.expose
 def getBoard():
-    eel.mapBoard(json.dumps(p.board, cls=NumpyArrayEncoder), 0)
-    eel.mapBoard(json.dumps(b.board, cls=NumpyArrayEncoder), 1)
+    eel.mapBoard(json.dumps(p[0].board, cls=NumpyArrayEncoder), 0)
+    eel.mapBoard(json.dumps(p[1].board, cls=NumpyArrayEncoder), 1)
 
 @eel.expose
-def attack(xCoord, yCoord):
+def attack(xCoord, yCoord, player):
     global playerTurn
-    if playerTurn == True and b.isDefeated()==False:
+    global game
+
+
+    if playerTurn == player and p[0].isDefeated()==False and p[1].isDefeated()==False:
         result = 0
         x = int(xCoord)-1
         y = int(yCoord)-1
-        result = p.attack(x, y, b)
+        result = 0
+        if(player == 0):
+            result = p[0].attack(x, y, p[1])
+        else:
+            result = p[1].attack(x, y, p[0])
         if(result == 0):
             eel.gameAlert("you hit there before")
-            playerTurn = True
         elif(result == 1):
             eel.gameAlert("miss")
-            playerTurn = False
-            botAttack()
+            if(player == 0):
+                playerTurn = 1
+            else:
+                playerTurn = 0
+            if(game == 0):
+                botAttack()
         elif(result == 2):
             eel.gameAlert("hit!!!")
-            playerTurn = True
-        elif playerTurn == False:
-            eel.gameAlert("Not your turn")
-        b.updateShips()
+        p[1].updateShips()
+        p[0].updateShips()
         getBoard()
-        if (b.isDefeated() == True):
-            eel.showWinner("The Player Wins.")
+        if (p[0].isDefeated() == True):
+            eel.showWinner("Player "+str(2)+" Wins.")
+        elif (p[1].isDefeated() == True):
+            eel.showWinner("Player "+str(1)+" Wins.")
+    elif playerTurn != player:
+        if(playerTurn == 0):
+            eel.gameAlert("This is player "+str(1)+ "s turn")
+        else:
+            eel.gameAlert("This is player "+str(2)+ "s turn")
     else: 
         eel.gameAlert("Game already Ended.")
 
 @eel.expose
 def botAttack():
     global playerTurn
-    if playerTurn == False and p.isDefeated()==False:
-        if(b.targeting == True):
-            if(b.targetedShip.isSinked == True):
-                b.targeting = False
-                b.targetedShip = None
-                b.hitX = []
-                b.hitY = []
+    if playerTurn == 1 and p[0].isDefeated()==False:
+        if(p[1].targeting == True):
+            if(p[1].targetedShip.isSinked == True):
+                p[1].targeting = False
+                p[1].targetedShip = None
+                p[1].hitX = []
+                p[1].hitY = []
         result = 0
-        result = b.attack(p)
+        result = p[1].attack(p[0])
         if(result == 1):
             eel.gameAlert("The bot missed")
-            playerTurn = True
+            playerTurn = 0
         else:
             eel.gameAlert("The bot hit!!!")
-            playerTurn = False
+            playerTurn = 1
             botAttack()
-        p.updateShips()
+        p[0].updateShips()
         getBoard()
-    if (p.isDefeated() == True):
+    if (p[0].isDefeated() == True):
         eel.showWinner("The Bot Wins.")
+
+@eel.expose
+def createboard(a, be, c, d):
+    global p
     
-p = Player(10)
-b = Bot(10)
-playerTurn = True
+    global game
+    aa = int(a)
+    bb = int(be)
+    cc = int(c)
+    dd = int(d)
+
+    n = aa*1 + bb*2 + cc*3 + dd*4
+    
+    size = 10*10
+    if(n > size):
+        size = n + n*0.5
+    print("a")
+    if(game == 0):
+        print("player vs c")
+        size = math.isqrt(size)
+        p[0] = Player(size)
+        p[1] = Bot(size)
+    else:
+        print("player vs player")
+        size = math.isqrt(size)
+        p[0] = Player(size)
+        p[1] = Player(size)
+    
+
+    for i in range(aa):
+        p[0].addShip(Ship("Submarino"+str(i), 1))
+        p[1].addShip(Ship("Submarinob"+str(i), 1))
+    for i in range(bb):
+        p[0].addShip(Ship("Destructor"+str(i), 2))
+        p[1].addShip(Ship("Destructorb"+str(i), 2))
+    for i in range(cc):
+        p[0].addShip(Ship("crucero"+str(i), 3))
+        p[1].addShip(Ship("crucerob"+str(i), 3))
+    for i in range(dd):
+        p[0].addShip(Ship("porta aviones"+str(i), 4))
+        p[1].addShip(Ship("porta avionesb"+str(i), 4))
+
+p = [Player(10), Bot(10)]
+playerTurn = 0
 
 eel.init('ui')
 eel.start('index.html')
