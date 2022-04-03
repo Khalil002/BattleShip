@@ -55,11 +55,17 @@ function mapBoard(board, playerNum) {
             if (board[index][jay] == 0) {
                 element.className = "";
             } else if(board[index][jay] == 1 ){
-                if(selectedTable == player1.children[0].children){
-                    element.className = "ship-cell";
+                if(gameType==0){
+                    if(selectedTable == player1.children[0].children){
+                        element.className = "ship-cell";
+                    }else{
+                        element.className = "";
+                    }
                 }else{
                     element.className = "";
                 }
+
+                
                 
             } else if(board[index][jay] == 2){
                 element.className = "miss-cell";
