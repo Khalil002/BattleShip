@@ -13,23 +13,41 @@ const addTableIdentifiers = (table) => {
         }
     }
 }
-
+function createTable(tableData, player) {
+    if (player == 0) {
+        var table = document.querySelector(`#player-1`)
+    } else {
+        var table = document.querySelector(`#player-2`)
+    }
+    let innerHTML = "<tbody>"
+    let index = 0, jay = 0;
+    tableData.forEach(function (rowData) {
+        innerHTML += `<tr x=${index+1}>`
+        index++;
+        rowData.forEach(function (cellData) {
+            innerHTML += `<td y=${jay+1}></td>`
+            jay++;
+        });
+        jay = 0;
+        innerHTML += "</tr>"
+    });
+    innerHTML += "</tbody>"
+    console.log(innerHTML);
+    table.innerHTML = innerHTML;
+}
 window.onload = () => {
-    addTableIdentifiers(player1)
-    addTableIdentifiers(player2)
-    console.log(gameType);
-    if(gameType == 0) {
+    if (gameType == 0) {
         document.querySelectorAll(".title span")[1].innerText = "Computer";
         eel.pvb();
     }
-    if(gameType == 1){
+    if (gameType == 1) {
         document.querySelectorAll(".title span")[1].innerText = "Player 2";
         eel.pvp();
     }
     eel.getBoard();
 }
 player1.addEventListener("click", (event) => {
-    if(gameType == 1){
+    if (gameType == 1) {
         let coords = [parseInt(event.target.parentNode.getAttribute('x')), event.target.getAttribute('y')]
         eel.attack(coords[0], coords[1], 1);
     }
@@ -41,6 +59,8 @@ player2.addEventListener("click", (event) => {
 eel.expose(mapBoard)
 function mapBoard(board, playerNum) {
     board = JSON.parse(board);
+    console.log(board)
+    createTable(board, playerNum);
     let selectedTable;
     if (parseInt(playerNum) == 0) {
         selectedTable = player1.children[0].children;
@@ -54,20 +74,18 @@ function mapBoard(board, playerNum) {
             const element = tableRow[jay];
             if (board[index][jay] == 0) {
                 element.className = "";
-            } else if(board[index][jay] == 1 ){
-                if(gameType==0){
-                    if(selectedTable == player1.children[0].children){
+            } else if (board[index][jay] == 1) {
+                if (gameType == 0) {
+                    if (selectedTable == player1.children[0].children) {
                         element.className = "ship-cell";
-                    }else{
+                    } else {
                         element.className = "";
                     }
-                }else{
+                } else {
                     element.className = "";
                 }
 
-                
-                
-            } else if(board[index][jay] == 2){
+            } else if (board[index][jay] == 2) {
                 element.className = "miss-cell";
             } else {
                 element.className = "hit-cell";
@@ -81,9 +99,9 @@ function gameAlert(message) {
         container: 'body',
         class: 'toast',
         position: 'bottom|right',
-        margin: (15*2),
+        margin: (15 * 2),
         delay: 0,
-        duration: 3000,
+        duration: 1000,
         style: {},
     });
     toast.message(message)
