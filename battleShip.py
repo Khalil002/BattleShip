@@ -7,6 +7,7 @@ from player import Player
 from ship import Ship
 import eel
 import math
+import time
 
 game = 0
 
@@ -82,23 +83,33 @@ def botAttack():
                 p[1].hitY = []
         result = 0
         result = p[1].attack(p[0])
+        if(result == 0):
+            eel.gameAlert("The bot hit that place before")
+            time.sleep(2)
+            #botAttack()
         if(result == 1):
             eel.gameAlert("The bot missed")
             playerTurn = 0
+            p[0].updateShips()
+            getBoard()
         else:
             eel.gameAlert("The bot hit!!!")
             playerTurn = 1
+            p[0].updateShips()
+            getBoard()
+            time.sleep(2)
             botAttack()
-        p[0].updateShips()
-        getBoard()
+
+        
     if (p[0].isDefeated() == True):
         eel.showWinner("The Bot Wins.")
 
 @eel.expose
 def createboard(a, be, c, d):
     global p
-    
+    global playerturn
     global game
+    playerturn = 0
     aa = int(a)
     bb = int(be)
     cc = int(c)
@@ -107,8 +118,8 @@ def createboard(a, be, c, d):
     n = aa*1 + bb*2 + cc*3 + dd*4
     
     size = 10*10
-    if(n > size):
-        size = n + n*0.5
+    if(n > size*0.75):
+        size =  int(n*2)
     print("a")
     if(game == 0):
         print("player vs c")
